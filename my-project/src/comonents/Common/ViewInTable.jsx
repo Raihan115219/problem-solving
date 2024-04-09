@@ -29,51 +29,26 @@ const ViewInTable = ({ data, Title }) => {
 
         <h1 className="text-3xl font-bold">{Title}</h1>
         <div className="border border-blue-100 p-5">
-          <div className="grid grid-cols-2">
-            {checkValuesOfMine?.map(([key, value], index) => {
-              return (
-                <div key={index}>
-                  <table className="table overflow-x-auto table-lg">
-                    <tbody>
-                      <thead>
-                        <tr>
-                          <th>
-                            {key
-                              .split(/(?=[A-Z])/)
-                              .map(
-                                (part) =>
-                                  part.charAt(0).toUpperCase() + part.slice(1)
-                              )
-                              .join(" ")}
-                          </th>
-                          <th>:</th>
-                          <th>{CorrectObjectValue(value)}</th>
-                        </tr>
-                      </thead>
-                    </tbody>
-                  </table>
-                </div>
-              );
-            })}
-            {/* {checkValuesOfMine?.map(([key, value], index) => {
-              return (
-                <div key={index}>
-                  <div className="flex">
-                    <div>
+          <table className="table">
+            <thead className="grid grid-cols-2 grid-flow-row">
+              {checkValuesOfMine?.map(([key, value], index) => {
+                return (
+                  <tr key={index}>
+                    <td>
                       {key
                         .split(/(?=[A-Z])/)
                         .map(
                           (part) => part.charAt(0).toUpperCase() + part.slice(1)
                         )
                         .join(" ")}
-                    </div>
-                    <div>:</div>
-                    <div>{checkValueCorrectOrNot(value)}</div>
-                  </div>
-                </div>
-              );
-            })} */}
-          </div>
+                    </td>
+                    <td>:</td>
+                    <td>{CorrectObjectValue(value)}</td>
+                  </tr>
+                );
+              })}
+            </thead>
+          </table>
         </div>
       </div>
     </div>

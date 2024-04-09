@@ -1,53 +1,47 @@
 import React from "react";
 
-const ViewInTable = ({ employee }) => {
-  return (
-    <div className="my-5">
-      <div className="overflow-x-auto">
-        <table className="table">
-          {/* head */}
+const ViewInTable = ({ data, Title }) => {
+  const checkValuesOfMine = Object.entries(data).map((item, i) => item);
 
-          <h1>View</h1>
-          <tbody>
-            {/* row 1 */}
-            <tr>
-              <th>1</th>
-              <td>Cy Ganderton</td>
-              <td>Quality Control Specialist</td>
-              <td>Blue</td>
-            </tr>
-            {/* row 2 */}
-          </tbody>
-          <h1>Hello world</h1>
-          <tbody>
-            {/* row 1 */}
-            <tr>
-              <th>1</th>
-              <td>Cy Ganderton</td>
-              <td>Quality Control Specialist</td>
-              <td>Blue</td>
-            </tr>
-            {/* row 2 */}
-          </tbody>
-        </table>
-      </div>
-      <div className="overflow-hidden">
-        <table className="table-auto">
-          <tbody className="divide-y divide-gray-200">
-            {Object.entries(employee).map(([key, value]) => (
-              <tr key={key} className="bg-white">
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className="text-sm font-medium text-gray-900">
-                    {key.replace(/([A-Z])/g, " $1").trim()}
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className="text-sm text-gray-500">{value}</span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+  const checkValueCorrectOrNot = (value) => {
+    if (typeof value === "object") {
+      return Object.entries(value).map(([subKey, subValue], i) => (
+        <div key={i}>
+          <span className="font-medium">{subKey}</span>
+          <span className="ml-1">: {subValue}</span>
+        </div>
+      ));
+    } else {
+      return <span>{value}</span>;
+    }
+  };
+
+  return (
+    <div>
+      <div className="my-5">
+        <h1 className="text-3xl font-bold">{Title}</h1>
+        <div className="border border-blue-100 p-5">
+          <div className="grid grid-cols-2">
+            {checkValuesOfMine?.map(([key, value], index) => {
+              return (
+                <div key={index}>
+                  <div className="grid grid-flow-col justify-normal">
+                    <div>
+                      {key
+                        .split(/(?=[A-Z])/)
+                        .map(
+                          (part) => part.charAt(0).toUpperCase() + part.slice(1)
+                        )
+                        .join(" ")}
+                    </div>
+                    <div>:</div>
+                    <div>{checkValueCorrectOrNot(value)}</div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </div>
   );

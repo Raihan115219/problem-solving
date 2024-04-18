@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./App.css";
 import ViewInTable from "./comonents/Common/ViewInTable";
+import ViewInTable1 from "./comonents/Common/ViewInTable1";
 
 function App() {
   const [data, setData] = useState();
   const [view, setView] = useState(false);
   const [Title, setTile] = useState();
+  const [formattedData, setFormattedData] = useState([]);
 
   const employee = {
     firstName: "John",
@@ -43,6 +45,7 @@ function App() {
     laptopNeeded: "YES",
     needAccess: "YES",
     arcID: "A123456",
+    demoID: "A123456",
     altEmail: "john.doe@example.com",
     streetAddress: "123 Main St",
     city: "New York City",
@@ -61,6 +64,18 @@ function App() {
       setData(contractor);
     }
   };
+  const objectKeys = Object.keys(contractor);
+  console.log(objectKeys.length);
+  useEffect(() => {
+    const formattedData = [];
+    objectKeys.length % 2 === 1 &&
+      objectKeys.splice(objectKeys.indexOf("altEmail"), 0, "");
+
+    for (let i = 1; i <= objectKeys.length; i += 2) {
+      formattedData.push([objectKeys[i - 1], objectKeys[i]]);
+    }
+    setFormattedData(formattedData);
+  }, []);
 
   return (
     <div className="container mx-auto my-5">
@@ -81,6 +96,14 @@ function App() {
 
       {/* Table component wil be here */}
       {view && <ViewInTable data={data} Title={Title} />}
+      {view && (
+        <ViewInTable1
+          data={formattedData}
+          object={data}
+          Title={Title}
+          separator={Math.round(objectKeys.indexOf("altEmail") / 2)}
+        />
+      )}
     </div>
   );
 }
